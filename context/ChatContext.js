@@ -89,15 +89,15 @@ export const ChatProvider = ({ children }) => {
       const rinkebyChainId = "0x4268";
       // const rinkebyChainId = "0xaa36a7";
 
-      // if (chainId !== rinkebyChainId) {
-      //   console.log("Please connect to Goerli Test Network");
-      //   setCorrectNetwork(false);
-      //   setNetworkError(true);
-      //   return;
-      // } else {
+      if (chainId !== rinkebyChainId) {
+        console.log("Please connect to Goerli Test Network");
+        setCorrectNetwork(false);
+        setNetworkError(true);
+        return;
+      } else {
         setCorrectNetwork(true);
         setNetworkError(false);
-      // }
+      }
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
