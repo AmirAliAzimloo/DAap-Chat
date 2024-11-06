@@ -12,5 +12,5 @@ function MyApp({ Component, pageProps }) {
     </ChatProvider>
   );
 }
-
+ 
 export default MyApp;
