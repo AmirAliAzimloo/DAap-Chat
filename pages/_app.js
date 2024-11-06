@@ -7,11 +7,9 @@ function MyApp({ Component, pageProps }) {
 
 
   return (
-    <SocketProvider>
     <ChatProvider>
       <Component {...pageProps} />
     </ChatProvider>
-    </SocketProvider>
   );
 }
 
