@@ -27,6 +27,7 @@ const PrivateInput = () => {
     const parsedUser = JSON.parse(userInfo);
 
     channel.bind("chat-event-private", function (data) {
+      console.log('render')
       // setMessageList((prevState) => [
       //   ...prevState,
       //   { sender: data.user, message: data.message },
@@ -72,7 +73,7 @@ const PrivateInput = () => {
     });
 
     return () => {
-      pusher.unsubscribe("chat");
+      pusher.unsubscribe("chat-event-private");
     };
   }, []);
 
