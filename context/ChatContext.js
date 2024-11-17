@@ -20,6 +20,7 @@ export const ChatProvider = ({ children }) => {
   const [searchAccount, setSearchAccount] = useState("");
   const [friendsList, setFriendsList] = useState([]);
   const [messagesList, setMessagesList] = useState([]);
+  const [privateMessagesList, setPrivateMessagesList] = useState([]);
 
   const { socket } = useSocket();
 
@@ -348,6 +349,38 @@ export const ChatProvider = ({ children }) => {
     }
   };
 
+  const showPrivateMessages = async (friendAddr) => {
+    try {
+      console.log("Show User friends");
+      const { ethereum } = window;
+      if (ethereum) {
+        const userInfo = localStorage.getItem("username") ?? "";
+      const parsedUser = JSON.parse(userInfo);
+
+        const savedMessages = localStorage.getItem(`messages-${parsedUser}`) ?? [];
+        const parsedMessages = JSON.parse(savedMessages);
+
+        setPrivateMessagesList(parsedMessages);
+
+        // const provider = new ethers.providers.Web3Provider(ethereum);
+        // const signer = provider.getSigner();
+        // const chatContract = new ethers.Contract(
+        //   ChatContractAddress,
+        //   ChatAbi.abi,
+        //   signer
+        // );
+
+        // // Add friend to the current user.
+        // setMessagesList(await chatContract.readMessage(friendAddr));
+        // setSelectedAddr(friendAddr);
+      } else {
+        alert("Please connect to MetaMask");
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
+
   // User LogIn from front-end onto the blockchain
   const checkIsUserLogged = async (event) => {
     try {
@@ -399,6 +432,9 @@ export const ChatProvider = ({ children }) => {
         sendMessage,
         setSelectedUserName,
         selectedUserName,
+        showPrivateMessages,
+        privateMessagesList,
+        setPrivateMessagesList,
       }}
     >
       {children}

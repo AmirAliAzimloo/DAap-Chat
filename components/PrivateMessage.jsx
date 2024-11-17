@@ -3,9 +3,10 @@ import { ChatContext } from "../context/ChatContext";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 
-const Message = ({ message }) => {
+const PrivateMessage = ({ message }) => {
   const ref = useRef();
   const router = useRouter();
+
   const[username,setUsername] = useState("");
 
 
@@ -14,12 +15,13 @@ const Message = ({ message }) => {
     addFriUseEffect,
     getMyFriendList,
     currentAccount,
-    messagesList,
+    privateMessagesList,
     showMessages,
+    showPrivateMessages,
   } = useContext(ChatContext);
 
   useEffect(() => {
-    showMessages();
+    showPrivateMessages();
     const userInfo = localStorage.getItem("username") ?? "";
     const parsedUser = JSON.parse(userInfo);
     setUsername(parsedUser)
@@ -28,22 +30,21 @@ const Message = ({ message }) => {
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messagesList]);
+  }, [privateMessagesList]);
+
+
 
   return (
     <div className="messages">
-      {messagesList.map((item) => (
+      {privateMessagesList.map((item) => (
         <>
           <div
             ref={ref}
             key={item.sender}
             className={`message ${item?.sender == username ? 'owner' : null}`}
-           
           >
             <div className="messageInfo">
               <img
-               style={{cursor:item?.sender == username ? "default" : "pointer"}}
-            onClick={()=>item?.sender == username ? null : router.push(`/chat/${item.sender}`)}
                 src="https://png.pngitem.com/pimgs/s/130-1300253_female-user-icon-png-download-user-image-color.png"
                 alt=""
               />
@@ -60,4 +61,4 @@ const Message = ({ message }) => {
   );
 };
 
-export default Message;
+export default PrivateMessage;
