@@ -4,8 +4,8 @@ import PrivateMessage from "./PrivateMessage";
 import PrivateInput from "./PrivateInput";
 import { useRouter } from "next/router";
 
-const PrivateChat = () => {
-  const { selectedUserName, logoutUser } = useContext(ChatContext);
+const PrivateChat = ({ friend }) => {
+  const { selectedUserName, logoutUser, setPrivateMessagesList,user } = useContext(ChatContext);
   const [username,setUsername] = useState(undefined);
 
   const router = useRouter();
@@ -23,6 +23,17 @@ const PrivateChat = () => {
        
       <div className="chatInfo">
         <div style={{color:'pink',cursor:'pointer'}} onClick={()=>router.back()}>back</div>
+
+        <div
+        style={{cursor:"pointer"}}
+          onClick={() => {
+            const messageKey = `messages-${username}`;
+            setPrivateMessagesList([]);
+            localStorage.removeItem(messageKey);
+          }}
+        >
+          Clear Chat
+        </div>
 
       <span className="logo">DApp Chat</span>
       <div>
